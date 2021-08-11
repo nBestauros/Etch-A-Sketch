@@ -1,0 +1,34 @@
+/*https://stackoverflow.com/questions/57550082/creating-a-16x16-grid-using-javascript*/
+:root {
+    --grid-cols: 1;
+    --grid-rows: 1;
+}
+
+body {
+    background-color: purple;
+    color: white;
+}
+
+.main {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+}
+button{
+    padding: 20px;
+}
+#gridcontainer {
+    display: grid;
+    height: 50vh;
+    width: 50vh;
+    grid-template-rows: repeat(var(--grid-rows), 1fr);
+    grid-template-columns: repeat(var(--grid-cols), 1fr);
+}
+
+.grid-item {
+    border: 1px solid #ddd;
+    text-align: center;
+}
