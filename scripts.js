@@ -1,5 +1,6 @@
 let colors = [];
 let currentColor = [0,0,0];
+let currentSize = 16;
 
 /*Creates rectangular array, where each value is an array of three values.
 These values represent RGB values. */
@@ -20,21 +21,27 @@ const container = document.getElementById("gridcontainer");
 /* https://stackoverflow.com/questions/57550082/creating-a-16x16-grid-using-javascript */
 
 function makeRows(size) {
-  container.style.setProperty('--grid-rows', size);
-  container.style.setProperty('--grid-cols', size);
-  initColors(size);
-  for (let outer = 0; outer < size; outer++) {
-      for(let inner = 0; inner< size; inner++){
-        let cell = document.createElement("div");
-        let r = colors[outer][inner][0];
-        let g = colors[outer][inner][1];
-        let b = colors[outer][inner][2];
-        cell.className="grid-item";
-        addHoverListener(cell);
-        cell.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-        container.appendChild(cell);
-      }
-  }
+    /* Checks if the container already has grid items (for wipe purposes) */
+
+    while (container.firstChild){
+        container.removeChild(container.lastChild);
+    }
+
+    container.style.setProperty('--grid-rows', size);
+    container.style.setProperty('--grid-cols', size);
+    initColors(size);
+    for (let outer = 0; outer < size; outer++) {
+        for(let inner = 0; inner< size; inner++){
+            let cell = document.createElement("div");
+            let r = colors[outer][inner][0];
+            let g = colors[outer][inner][1];
+            let b = colors[outer][inner][2];
+            cell.className="grid-item";
+            addHoverListener(cell);
+            cell.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+            container.appendChild(cell);
+        }
+    }
 }
 
 function addHoverListener(cell){
@@ -46,4 +53,13 @@ function addHoverListener(cell){
     })
 }
 
-makeRows(16);
+
+const wipeButton = document.getElementById("wipe");
+wipeButton.addEventListener("click",  function(){
+    makeRows(currentSize);
+})
+
+/*intialize the original grid on page load */
+makeRows(currentSize);
+
+
