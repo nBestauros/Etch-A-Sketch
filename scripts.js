@@ -1,5 +1,5 @@
 let colors = [];
-
+let currentColor = [0,0,0];
 
 /*Creates rectangular array, where each value is an array of three values.
 These values represent RGB values. */
@@ -16,6 +16,9 @@ function initColors(size){
 
 const container = document.getElementById("gridcontainer");
 
+
+/* https://stackoverflow.com/questions/57550082/creating-a-16x16-grid-using-javascript */
+
 function makeRows(size) {
   container.style.setProperty('--grid-rows', size);
   container.style.setProperty('--grid-cols', size);
@@ -27,10 +30,20 @@ function makeRows(size) {
         let g = colors[outer][inner][1];
         let b = colors[outer][inner][2];
         cell.className="grid-item";
+        addHoverListener(cell);
         cell.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
         container.appendChild(cell);
       }
   }
+}
+
+function addHoverListener(cell){
+    cell.addEventListener("mouseenter", function(e){
+        let r = currentColor[0];
+        let g = currentColor[1];
+        let b = currentColor[2];
+        cell.style.backgroundColor = `rgb(${r}, ${g}, ${b})`
+    })
 }
 
 makeRows(16);
