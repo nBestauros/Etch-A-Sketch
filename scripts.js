@@ -1,26 +1,13 @@
 let colors = [];
 let currentColor = [0,0,0];
+let bgColor = [255, 255, 255];
 let currentSize = 16;
-
-/*Creates rectangular array, where each value is an array of three values.
-These values represent RGB values. */
-function initColors(size){
-    for(let outer = 0; outer<size; outer++){
-        for(let inner = 0; inner<size; inner++){
-            if(inner==0){
-                colors[outer]= new Array(size);
-            }
-            colors[outer][inner] = [255,255,255];
-        }
-    }
-}
 
 const container = document.getElementById("gridcontainer");
 
-
 /* https://stackoverflow.com/questions/57550082/creating-a-16x16-grid-using-javascript */
 
-function makeRows(size) {
+function makeRows(size, bgColor) {
     /* Checks if the container already has grid items (for wipe purposes) */
 
     while (container.firstChild){
@@ -29,13 +16,12 @@ function makeRows(size) {
 
     container.style.setProperty('--grid-rows', size);
     container.style.setProperty('--grid-cols', size);
-    initColors(size);
     for (let outer = 0; outer < size; outer++) {
         for(let inner = 0; inner< size; inner++){
             let cell = document.createElement("div");
-            let r = colors[outer][inner][0];
-            let g = colors[outer][inner][1];
-            let b = colors[outer][inner][2];
+            let r = bgColor[0];
+            let g = bgColor[1];
+            let b = bgColor[2];
             cell.className="grid-item";
             addHoverListener(cell);
             cell.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
@@ -44,6 +30,7 @@ function makeRows(size) {
     }
 }
 
+/*Adds listener that colors a cell with the GIVEN color (at time of wipe) */
 function addHoverListener(cell){
     cell.addEventListener("mouseenter", function(e){
         let r = currentColor[0];
@@ -53,17 +40,15 @@ function addHoverListener(cell){
     })
 }
 
-
+/*resets and resizes (if needed) the canvas */
 const wipeButton = document.getElementById("wipe");
 wipeButton.addEventListener("click",  function(){
     const sizeSlider = document.getElementById("size");
     currentSize = sizeSlider.value;
-    makeRows(currentSize);
+    makeRows(currentSize,bgColor);
 })
 
-
-
 /*intialize the original grid on page load */
-makeRows(currentSize);
+makeRows(currentSize, bgColor);
 
 
