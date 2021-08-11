@@ -56,8 +56,12 @@ function addHoverListener(cell){
 
 const wipeButton = document.getElementById("wipe");
 wipeButton.addEventListener("click",  function(){
+    const sizeSlider = document.getElementById("size");
+    currentSize = sizeSlider.value;
     makeRows(currentSize);
 })
+
+
 
 /*intialize the original grid on page load */
 makeRows(currentSize);
